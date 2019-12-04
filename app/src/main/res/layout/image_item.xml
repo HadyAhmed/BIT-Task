@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="mediaResponse"
+            type="com.hadi.bit_task.model.Data" />
+
+        <variable
+            name="onImageClickListener"
+            type="com.hadi.bit_task.adapter.ProfileMediaAdapter.OnImageClickListener" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="@dimen/img_dimen"
+        android:layout_height="@dimen/img_dimen"
+        android:onClick="@{()->onImageClickListener.sendImageUrl(mediaResponse.image)}"
+        app:cardCornerRadius="@dimen/small_margin"
+        app:cardElevation="@dimen/elevation"
+        app:cardUseCompatPadding="true">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            app:imgSrc="@{mediaResponse.image}"
+            tools:src="@tools:sample/avatars[0]" />
+
+    </com.google.android.material.card.MaterialCardView>
+</layout>

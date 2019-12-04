@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="profileResponse"
+            type="com.hadi.bit_task.model.UserInfoResponse" />
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".ui.destinations.ProfileFragment">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            app:elevation="0dp">
+
+            <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fitsSystemWindows="true"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_collapseMode="parallax">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/profile_image"
+                        android:layout_width="@dimen/profile_dimen"
+                        android:layout_height="@dimen/profile_dimen"
+                        android:layout_margin="@dimen/medium_margin"
+                        app:civ_border_color="#FF000000"
+                        app:civ_border_width="2dp"
+                        app:imgSrc="@{profileResponse.data.profilePicture}"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:src="@tools:sample/avatars[0]" />
+
+                    <TextView
+                        android:id="@+id/profile_name_tv"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/medium_margin"
+                        android:text="@{profileResponse.data.fullName}"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                        app:layout_constraintBottom_toTopOf="@+id/profile_location_tv"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/profile_image"
+                        app:layout_constraintTop_toTopOf="@+id/profile_image"
+                        tools:text="Hadi Ahmed" />
+
+                    <TextView
+                        android:id="@+id/profile_location_tv"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/medium_margin"
+                        android:text="@{profileResponse.data.location}"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                        app:layout_constraintBottom_toTopOf="@+id/profile_bio_tv"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/profile_image"
+                        app:layout_constraintTop_toBottomOf="@+id/profile_name_tv"
+                        tools:text="Cairo, Egypt" />
+
+                    <TextView
+                        android:id="@+id/profile_bio_tv"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_marginStart="@dimen/medium_margin"
+                        android:ellipsize="end"
+                        android:maxLines="3"
+                        android:text="@{profileResponse.data.bio}"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                        app:layout_constraintBottom_toBottomOf="@+id/profile_image"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/profile_image"
+                        app:layout_constraintTop_toBottomOf="@+id/profile_location_tv"
+                        tools:text="Hello World" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="@dimen/small_margin"
+                app:cardElevation="@dimen/elevation"
+                app:cardUseCompatPadding="true"
+                app:layout_collapseMode="pin">
+
+                <GridLayout
+                    android:id="@+id/profile_counter_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/medium_margin"
+                    android:columnCount="3"
+                    android:padding="@dimen/small_margin"
+                    android:useDefaultMargins="true">
+
+                    <TextView
+                        android:layout_row="0"
+                        android:layout_column="0"
+                        android:layout_columnWeight="1"
+                        android:gravity="center"
+                        android:text="@{String.valueOf(safeUnbox(profileResponse.data.counts.posts))}"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                        tools:text="1009" />
+
+                    <TextView
+                        android:layout_row="0"
+                        android:layout_column="1"
+                        android:layout_columnWeight="1"
+                        android:gravity="center"
+                        android:text="@{String.valueOf(safeUnbox(profileResponse.data.counts.followers))}"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                        tools:text="1009" />
+
+                    <TextView
+                        android:layout_row="0"
+                        android:layout_column="2"
+                        android:layout_columnWeight="1"
+                        android:gravity="center"
+                        android:text="@{String.valueOf(safeUnbox(profileResponse.data.counts.following))}"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                        tools:text="1009" />
+
+                    <TextView
+                        android:layout_row="1"
+                        android:layout_column="0"
+                        android:layout_columnWeight="1"
+                        android:gravity="center"
+                        android:text="@string/posts_label"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
+
+                    <TextView
+                        android:layout_row="1"
+                        android:layout_column="1"
+                        android:layout_columnWeight="1"
+                        android:gravity="center"
+                        android:text="@string/followers_label"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
+
+                    <TextView
+                        android:layout_row="1"
+                        android:layout_column="2"
+                        android:layout_columnWeight="1"
+                        android:gravity="center"
+                        android:text="@string/following_label"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
+                </GridLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/media_rv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                tools:spanCount="3"
+                tools:listitem="@layout/image_item" />
+
+        </LinearLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>
