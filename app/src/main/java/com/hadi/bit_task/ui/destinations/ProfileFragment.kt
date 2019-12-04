@@ -58,33 +58,43 @@ class ProfileFragment : Fragment(), ProfileMediaAdapter.OnImageClickListener {
     override fun onStart() {
         super.onStart()
 
+        fetchProfileData()
+
+
+    }
+
+    private fun fetchProfileData() {
         viewModel.profileData.observe(this, Observer {
             when {
                 it?.resultData != null -> {
                     Timber.i((it.resultData as UserInfoResponse).toString())
                     profileBinding.profileResponse = it.resultData as UserInfoResponse
+                    fetchProfileMedia()
                 }
-                it?.responseCode != null -> {
-                    showToastMessage("Error code:${it.responseCode}")
-                }
-                else -> {
+                it?.throwable != null -> {
                     showToastMessage("Make sure you have stable connection")
                     Timber.e(it.throwable)
                 }
+                else -> {
+                    showToastMessage("Error code:${it.responseCode}")
+                }
             }
         })
+    }
 
+    private fun fetchProfileMedia() {
         viewModel.profileMedia.observe(this, Observer {
             when {
                 it?.resultData != null -> {
                     mediaAdapter.updateData((it.resultData as MediaDataResponse).data)
                 }
-                it?.responseCode != null -> {
-                    showToastMessage("Error code:${it.responseCode}")
-                }
-                else -> {
+                it?.throwable != null -> {
                     showToastMessage("Make sure you have stable connection")
                     Timber.e(it.throwable)
+                }
+                else -> {
+                    showToastMessage("Error code:${it.responseCode}")
+
                 }
             }
         })
